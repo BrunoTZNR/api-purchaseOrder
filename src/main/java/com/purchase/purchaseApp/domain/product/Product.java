@@ -90,7 +90,10 @@ public class Product implements Serializable{
 	}
 	
 	//diminui a quantidade de itens
-	public void controlQuantity(Integer subQuantity) {
-		this.quantity = this.quantity - subQuantity;
+	public void controlQuantity(Integer quantity, String op) {
+		if(op == "sum")
+			this.quantity = this.quantity + quantity;
+		else
+			this.quantity = this.quantity - quantity;
 	}
 }

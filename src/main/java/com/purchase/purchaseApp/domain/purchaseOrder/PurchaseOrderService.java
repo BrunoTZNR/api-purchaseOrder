@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.purchase.purchaseApp.domain.client.Client;
 import com.purchase.purchaseApp.domain.client.ClientService;
+import com.purchase.purchaseApp.domain.product.ProductService;
+import com.purchase.purchaseApp.domain.productItem.ProductItem;
 
 @Service
 public class PurchaseOrderService {
@@ -20,14 +19,13 @@ public class PurchaseOrderService {
 	@Autowired
 	private ClientService clientService;
 	
-	//create ordem de compra
-	public Object createPurchaseOrder(PurchaseOrderRecord purchaseOrderRecord) {
-		Optional<Client> client = clientService.getClient(purchaseOrderRecord.clientCpf());
-		
-		if(client.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado!");
-		}
+	@Autowired
+	private ProductService productService;
 	
+	//create ordem de compra
+	public PurchaseOrder createPurchaseOrder(PurchaseOrderRecord purchaseOrderRecord) {
+		var client = clientService.getClient(purchaseOrderRecord.clientCpf());
+
 		var purchaseOrder0 = new PurchaseOrder();
 		
 		purchaseOrder0.setDataPedido(purchaseOrderRecord.dataPedido());
@@ -43,29 +41,14 @@ public class PurchaseOrderService {
 	
 	//pegar uma ordem
 	public Optional<PurchaseOrder> getPurchaseOrder(Integer numPedido) {
-		Optional<PurchaseOrder> purchaseOrder0 = purchaseOrderRepository.findById(numPedido);
-		
-		if(purchaseOrder0.isEmpty()) {
-			return null;
-		}
-		
-		return purchaseOrder0;
+		return purchaseOrderRepository.findById(numPedido);
 	}
 	
 	//editar uma ordem
-	public Object editPurchaseOrder(Integer numPedido, PurchaseOrderRecord purchaseOrderRecord) {
-		Optional<PurchaseOrder> purchaseOrder0 = purchaseOrderRepository.findById(numPedido);
-		
-		if(purchaseOrder0.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ordem de pedido não encontrado!");
-		}
-		
-		Optional<Client> client = clientService.getClient(purchaseOrderRecord.clientCpf());
-		
-		if(client.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado!");
-		}
-		
+	public PurchaseOrder editPurchaseOrder(Integer numPedido, PurchaseOrderRecord purchaseOrderRecord) {
+		var purchaseOrder0 = purchaseOrderRepository.findById(numPedido);
+		var client = clientService.getClient(purchaseOrderRecord.clientCpf());
+
 		var purchaseOrder = purchaseOrder0.get();
 		
 		purchaseOrder.setDataPedido(purchaseOrderRecord.dataPedido());
@@ -75,15 +58,15 @@ public class PurchaseOrderService {
 	}
 	
 	//deletar uma ordem
-	public Object deletePurchaseOrder(Integer numPedido) {
-		Optional<PurchaseOrder> purchaseOrder0 = purchaseOrderRepository.findById(numPedido);
+	public void deletePurchaseOrder(Integer numPedido) {
+		var purchaseOrder0 = purchaseOrderRepository.findById(numPedido);
 		
-		if(purchaseOrder0.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ordem de pedido não encontrado!");
+		for(ProductItem pi : purchaseOrder0.get().getProductItems()) {
+			pi.getProduct().controlQuantity(pi.getQuantity(), "sum");
+			
+			productService.saveProduct(pi.getProduct());
 		}
 		
 		purchaseOrderRepository.deleteById(numPedido);
-		
-		return ResponseEntity.status(HttpStatus.OK).body("Ordem de pedido deletado!");
 	}
 }

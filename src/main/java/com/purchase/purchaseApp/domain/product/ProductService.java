@@ -22,6 +22,10 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 	
+	public void saveProduct(Product product) {
+		productRepository.save(product);
+	}
+	
 	//pegar todos os produtos
 	public List<Product> getAllProducts() {
 		return productRepository.findAll();

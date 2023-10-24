@@ -42,7 +42,7 @@ public class ProductController {
 		var product0 = productService.getProduct(id);
 		
 		if(product0.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(product0);
@@ -54,7 +54,7 @@ public class ProductController {
 		var product0 = productService.getProduct(id);
 		
 		if(product0.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(productService.editProduct(id, productRecord));
@@ -65,7 +65,7 @@ public class ProductController {
 		var product0 = productService.getProduct(id);
 		
 		if(product0.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
 		}
 		
 		productService.deleteProduct(id);
