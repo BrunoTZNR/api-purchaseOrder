@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.purchase.purchaseApp.domain.purchaseOrder.PurchaseOrder;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,7 +32,7 @@ public class Client implements Serializable{
 	@Column(name = "dtNasc_client", nullable = false)
 	private LocalDate dtNasc;
 	
-	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<PurchaseOrder> pedidos;
 
 	public String getCpf() {

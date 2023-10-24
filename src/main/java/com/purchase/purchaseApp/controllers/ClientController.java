@@ -43,7 +43,7 @@ public class ClientController {
 		Optional<Client> client0 = clientService.getClient(cpf);
 		
 		if(client0.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado!");
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(clientService.getClient(cpf));
@@ -55,7 +55,7 @@ public class ClientController {
 		Optional<Client> client0 = clientService.getClient(cpf);
 		
 		if(client0.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado!");
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(clientService.editClient(cpf, clientRecord));
@@ -66,11 +66,11 @@ public class ClientController {
 		Optional<Client> client0 = clientService.getClient(cpf);
 		
 		if(client0.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado!");
 		}
 		
 		clientService.deleteClient(cpf);
 		
-		return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado!");
 	}
 }

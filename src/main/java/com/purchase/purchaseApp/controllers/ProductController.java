@@ -70,6 +70,6 @@ public class ProductController {
 		
 		productService.deleteProduct(id);
 		
-		return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.OK).body("Produto deletado!");
 	}
 }

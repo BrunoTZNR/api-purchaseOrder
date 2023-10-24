@@ -7,11 +7,18 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.purchase.purchaseApp.domain.productItem.ProductItem;
+import com.purchase.purchaseApp.domain.purchaseOrder.PurchaseOrder;
+import com.purchase.purchaseApp.domain.purchaseOrder.PurchaseOrderService;
+
 @Service
 public class ClientService {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private PurchaseOrderService purchaseOrderService;
 	
 	//cadastrar cliente
 	public Client createClient(ClientRecord clientRecord) {
@@ -45,6 +52,18 @@ public class ClientService {
 	
 	//deletar cliente
 	public void deleteClient(String cpf) {
+		List<PurchaseOrder> purchaseOrder0 = purchaseOrderService.getAllPurchaseOrders();
+		
+		for(PurchaseOrder po : purchaseOrder0) {
+			if(po.getClient().getCpf() == cpf) {
+				if(!po.getProductItems().isEmpty()) {
+					for(ProductItem pi : po.getProductItems()) {
+						pi.getProduct().controlQuantity(pi.getQuantity(), "sum");
+					}
+				}
+			}
+		}
+		
 		clientRepository.deleteById(cpf);
 	}
 }
