@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.purchase.purchaseApp.domain.client.ClientService;
-import com.purchase.purchaseApp.domain.product.ProductService;
 import com.purchase.purchaseApp.domain.productItem.ProductItem;
 
 @Service
@@ -18,9 +17,6 @@ public class PurchaseOrderService {
 	
 	@Autowired
 	private ClientService clientService;
-	
-	@Autowired
-	private ProductService productService;
 	
 	//create ordem de compra
 	public PurchaseOrder createPurchaseOrder(PurchaseOrderRecord purchaseOrderRecord) {
@@ -63,8 +59,6 @@ public class PurchaseOrderService {
 		
 		for(ProductItem pi : purchaseOrder0.get().getProductItems()) {
 			pi.getProduct().controlQuantity(pi.getQuantity(), "sum");
-			
-			productService.saveProduct(pi.getProduct());
 		}
 		
 		purchaseOrderRepository.deleteById(numPedido);

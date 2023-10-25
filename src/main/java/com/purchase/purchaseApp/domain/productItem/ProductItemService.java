@@ -83,8 +83,6 @@ public class ProductItemService {
 		
 		product0.controlQuantity(productItem0.get().getQuantity(), "sum");
 		
-		productService.saveProduct(product0);
-		
 		productItemRepository.deleteById(id);
 	}
 }
