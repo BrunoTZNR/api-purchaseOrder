@@ -3,9 +3,7 @@
 **Get** - GET ALL
 
     http://localhost:8080/v1/client
-**Get** - GET ONE
 
-     http://localhost:8080/v1/client/01234567890
 **Post** - POST
 
     http://localhost:8080/v1/client
@@ -17,6 +15,9 @@
     "dtNasc": "2000-01-01"
 }
 ```
+**Get** - GET ONE
+
+     http://localhost:8080/v1/client/01234567890
 **Put** - PUT
 
     http://localhost:8080/v1/client/01234567890
@@ -35,9 +36,7 @@
 **Get** - GET ALL
 
     http://localhost:8080/v1/product
-**Get** - GET ONE
 
-     http://localhost:8080/v1/product/1
 **Post** - POST
 
     http://localhost:8080/v1/product
@@ -49,6 +48,9 @@
     "amount": 2.99
 }
 ```
+**Get** - GET ONE
+
+     http://localhost:8080/v1/product/1
 **Put** - PUT
 
     http://localhost:8080/v1/client/01234567890
@@ -67,9 +69,7 @@
 **Get** - GET ALL
 
     http://localhost:8080/v1/purchaseOrder
-**Get** - GET ONE
 
-     http://localhost:8080/v1/purchaseOrder/1
 **Post** - POST
 
     http://localhost:8080/v1/purchaseOrder
@@ -79,6 +79,9 @@
     "clientCpf": "01234567890"
 }
 ```
+**Get** - GET ONE
+
+     http://localhost:8080/v1/purchaseOrder/1
 **Put** - PUT
 
     http://localhost:8080/v1/purchaseOrder/1
@@ -91,13 +94,11 @@
 **Delete**
 
     http://localhost:8080/v1/purchaseOrder/1
-   ## ProductItem
+## ProductItem
    **Get** - GET ALL
 
     http://localhost:8080/v1/productItem
-**Get** - GET ONE
 
-     http://localhost:8080/v1/productItem/1
 **Post** - POST
 
     http://localhost:8080/v1/purchaseOrder
@@ -109,6 +110,9 @@
     "purchaseOrderId": 1
 }
 ```
+**Get** - GET ONE
+
+     http://localhost:8080/v1/productItem/1
 **Put** - PUT
 
     http://localhost:8080/v1/productItem/1
